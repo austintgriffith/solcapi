@@ -16,7 +16,7 @@ app.post('/', function(req, res, next) {
 });
 
 app.get('/',function(req, res, next) {
-  res.send(fs.readFileSync("README.md").toString())
+  res.send(fs.readFileSync("readme.html").toString())
 });
 
 app.listen(8080, () => console.log('[*] express is up and listing on 8080'))
