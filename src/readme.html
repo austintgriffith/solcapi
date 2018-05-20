@@ -1,5 +1,10 @@
 <h1 id="solcapi">solcapi</h1>
 <p>Solidity Compiler API #BUIDLt for Solidity Golf</p>
+<p>POST an object to be passed to the solc compiler to <a href="http://18.217.190.20:8080">http://18.217.190.20:8080</a>:</p>
+<pre><code>{
+  &quot;Test.sol&quot;: &quot;YOUR SOLIDITY CODE HERE&quot;
+}
+</code></pre><h1 id="running-your-own">running your own</h1>
 <h2 id="docker">docker</h2>
 <pre><code>cd docker
 ./build.sh
@@ -10,18 +15,14 @@
 npm i
 npm start
 </code></pre><p>(listens for POST requests on port 8080)</p>
-<p>POST an object to be passed to the solc compiler:</p>
-<pre><code>{
-  &quot;Test.sol&quot;: &quot;YOUR SOLIDITY CODE HERE&quot;
-}
-</code></pre><h2 id="usage">usage</h2>
+<h2 id="usage">usage</h2>
 <h3 id="axios">axios</h3>
 <pre><code>const fs = require(&#39;fs&#39;);
 const axios = require(&#39;axios&#39;);
 var postData = {
   &quot;Test.sol&quot;: fs.readFileSync(&quot;./Test.sol&quot;).toString()
 };
-axios.post(&quot;http://localhost:8000&quot;, postData)
+axios.post(&quot;http://18.217.190.20:8080/&quot;, postData)
 .then((res) =&gt; {
   try {
     console.log(res.data);
