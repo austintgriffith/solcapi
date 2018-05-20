@@ -3,7 +3,7 @@ const axios = require('axios');
 var postData = {
   "Test.sol": fs.readFileSync("./Test.sol").toString()
 };
-axios.post("http://localhost:8000", postData)
+axios.post("http://18.217.190.20:8080/", postData)
 .then((res) => {
   try {
     console.log(res.data);
