@@ -4,12 +4,12 @@
 <pre><code>cd docker
 ./build.sh
 ./run.sh
-</code></pre><p>(brings up a container listening for POST requests on port 22222)</p>
+</code></pre><p>(brings up a container listening for POST requests on port 80)</p>
 <h2 id="raw-node-no-docker-">raw node (no docker)</h2>
 <pre><code>cd src
 npm i
 npm start
-</code></pre><p>(listens for POST requests on port 11111)</p>
+</code></pre><p>(listens for POST requests on port 8080)</p>
 <p>POST an object to be passed to the solc compiler:</p>
 <pre><code>{
   &quot;Test.sol&quot;: &quot;YOUR SOLIDITY CODE HERE&quot;
@@ -21,7 +21,7 @@ const axios = require(&#39;axios&#39;);
 var postData = {
   &quot;Test.sol&quot;: fs.readFileSync(&quot;./Test.sol&quot;).toString()
 };
-axios.post(&quot;http://localhost:22222/&quot;, postData)
+axios.post(&quot;http://solc.io&quot;, postData)
 .then((res) =&gt; {
   try {
     console.log(res.data);
