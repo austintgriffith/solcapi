@@ -1,37 +1,133 @@
 <h1 id="solcapi">solcapi</h1>
 <p>Solidity Compiler API #BUIDLt for Solidity Golf</p>
-<p>POST an object to be passed to the solc compiler to <a href="http://18.217.190.20:8080">http://18.217.190.20:8080</a>:</p>
+<p>POST solidity code to <a href="https://api.solc.io">https://api.solc.io</a></p>
 <pre><code>{
   &quot;Test.sol&quot;: &quot;YOUR SOLIDITY CODE HERE&quot;
 }
-</code></pre><h1 id="running-your-own">running your own</h1>
-<h2 id="docker">docker</h2>
+</code></pre><hr>
+<h2 id="usage">usage</h2>
+<h3 id="python">python</h3>
+<pre><code>import http.client
+
+conn = http.client.HTTPConnection(&quot;api,solc,io&quot;)
+
+payload = &quot;{\n\t\&quot;Test.sol\&quot;: \&quot;pragma solidity ^0.4.15;contract Test {function Test() public {}}\&quot;\n}&quot;
+
+headers = {
+    &#39;Content-Type&#39;: &quot;application/json&quot;,
+    &#39;Cache-Control&#39;: &quot;no-cache&quot;
+}
+
+conn.request(&quot;POST&quot;, &quot;undefined&quot;, payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode(&quot;utf-8&quot;))
+</code></pre><p>or</p>
+<pre><code>import requests
+
+url = &quot;https://api.solc.io&quot;
+
+payload = &quot;{\n\t\&quot;Test.sol\&quot;: \&quot;pragma solidity ^0.4.15;contract Test {function Test() public {}}\&quot;\n}&quot;
+headers = {
+    &#39;Content-Type&#39;: &quot;application/json&quot;,
+    &#39;Cache-Control&#39;: &quot;no-cache&quot;
+    }
+
+response = requests.request(&quot;POST&quot;, url, data=payload, headers=headers)
+
+print(response.text)
+</code></pre><h3 id="javascript">javascript</h3>
+<pre><code>var request = require(&quot;request&quot;);
+
+var options = { method: &#39;POST&#39;,
+  url: &#39;https://api.solc.io&#39;,
+  headers:
+   { &#39;Cache-Control&#39;: &#39;no-cache&#39;,
+     &#39;Content-Type&#39;: &#39;application/json&#39;
+
+   },
+  body: { &#39;Test.sol&#39;: &#39;pragma solidity ^0.4.15;contract Test {function Test() public {}}&#39; },
+  json: true };
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+  console.log(body);
+});
+</code></pre><p>or</p>
+<pre><code>var settings = {
+  &quot;async&quot;: true,
+  &quot;crossDomain&quot;: true,
+  &quot;url&quot;: &quot;https://api.solc.io&quot;,
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;headers&quot;: {
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+    &quot;Cache-Control&quot;: &quot;no-cache&quot;
+  },
+  &quot;processData&quot;: false,
+  &quot;data&quot;: &quot;{\n\t\&quot;Test.sol\&quot;: \&quot;pragma solidity ^0.4.15;contract Test {function Test() public {}}\&quot;\n}&quot;
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+</code></pre><h3 id="php">php</h3>
+<pre><code>&lt;?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL =&gt; &quot;https://api.solc.io&quot;,
+  CURLOPT_RETURNTRANSFER =&gt; true,
+  CURLOPT_ENCODING =&gt; &quot;&quot;,
+  CURLOPT_MAXREDIRS =&gt; 10,
+  CURLOPT_TIMEOUT =&gt; 30,
+  CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST =&gt; &quot;POST&quot;,
+  CURLOPT_POSTFIELDS =&gt; &quot;{\n\t\&quot;Test.sol\&quot;: \&quot;pragma solidity ^0.4.15;contract Test {function Test() public {}}\&quot;\n}&quot;,
+  CURLOPT_HTTPHEADER =&gt; array(
+    &quot;Cache-Control: no-cache&quot;,
+    &quot;Content-Type: application/json&quot;
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo &quot;cURL Error #:&quot; . $err;
+} else {
+  echo $response;
+}
+</code></pre><h3 id="curl">curl</h3>
+<pre><code>curl -X POST \
+  https://api.solc.io \
+  -H &#39;Cache-Control: no-cache&#39; \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{
+    &quot;Test.sol&quot;: &quot;pragma solidity ^0.4.15;contract Test {function Test() public {}}&quot;
+}&#39;
+</code></pre><h3 id="raw">raw</h3>
+<pre><code>POST  HTTP/1.1
+Host: api.solc.io
+Content-Type: application/json
+Cache-Control: no-cache
+{
+    &quot;Test.sol&quot;: &quot;pragma solidity ^0.4.15;contract Test {function Test() public {}}&quot;
+}
+</code></pre><hr>
+<h2 id="running-locally">running locally</h2>
+<h3 id="docker">docker</h3>
 <pre><code>cd docker
 ./build.sh
 ./run.sh
 </code></pre><p>(brings up a container listening for POST requests on port 8000)</p>
-<h2 id="raw-node-no-docker-">raw node (no docker)</h2>
+<h3 id="raw-node-no-docker-">raw node (no docker)</h3>
 <pre><code>cd src
 npm i
 npm start
 </code></pre><p>(listens for POST requests on port 8080)</p>
-<h2 id="usage">usage</h2>
-<h3 id="axios">axios</h3>
-<pre><code>const fs = require(&#39;fs&#39;);
-const axios = require(&#39;axios&#39;);
-var postData = {
-  &quot;Test.sol&quot;: fs.readFileSync(&quot;./Test.sol&quot;).toString()
-};
-axios.post(&quot;http://18.217.190.20:8080/&quot;, postData)
-.then((res) =&gt; {
-  try {
-    console.log(res.data);
-  } catch (e) {
-    console.log(e)
-    console.log(res.data)
-  }
-})
-.catch((err) =&gt; {
-  console.log(&quot;AXIOS ERROR: &quot;, err);
-})
-</code></pre><p>(this repo is similar to <a href="https://github.com/smartcontractkit/solc-api">https://github.com/smartcontractkit/solc-api</a> from Steve Ellis)</p>
+<p>(this repo is similar to <a href="https://github.com/smartcontractkit/solc-api">https://github.com/smartcontractkit/solc-api</a> from Steve Ellis)</p>
