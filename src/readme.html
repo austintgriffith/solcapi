@@ -1,0 +1,36 @@
+<h1 id="solcapi">solcapi</h1>
+<p>Solidity Compiler API #BUIDLt for Solidity Golf</p>
+<h2 id="docker">docker</h2>
+<pre><code>cd docker
+./build.sh
+./run.sh
+</code></pre><p>(brings up a container listening for POST requests on port 22222)</p>
+<h2 id="raw-node-no-docker-">raw node (no docker)</h2>
+<pre><code>cd src
+npm i
+npm start
+</code></pre><p>(listens for POST requests on port 11111)</p>
+<p>POST an object to be passed to the solc compiler:</p>
+<pre><code>{
+  &quot;Test.sol&quot;: &quot;YOUR SOLIDITY CODE HERE&quot;
+}
+</code></pre><h2 id="usage">usage</h2>
+<h3 id="axios">axios</h3>
+<pre><code>const fs = require(&#39;fs&#39;);
+const axios = require(&#39;axios&#39;);
+var postData = {
+  &quot;Test.sol&quot;: fs.readFileSync(&quot;./Test.sol&quot;).toString()
+};
+axios.post(&quot;http://localhost:22222/&quot;, postData)
+.then((res) =&gt; {
+  try {
+    console.log(res.data);
+  } catch (e) {
+    console.log(e)
+    console.log(res.data)
+  }
+})
+.catch((err) =&gt; {
+  console.log(&quot;AXIOS ERROR: &quot;, err);
+})
+</code></pre><p>(this repo is similar to (solc-api)[<a href="https://github.com/smartcontractkit/solc-api]">https://github.com/smartcontractkit/solc-api]</a> from Steve Ellis)</p>
