@@ -1,4 +1,4 @@
 #!/bin/bash
 cd /src
-npm i
+npm install
 exec npm start
