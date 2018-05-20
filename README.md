@@ -8,7 +8,7 @@ cd docker
 ./build.sh
 ./run.sh
 ```
-(brings up a container listening for POST requests on port 80)
+(brings up a container listening for POST requests on port 8000)
 
 ## raw node (no docker)
 ```
@@ -35,7 +35,7 @@ const axios = require('axios');
 var postData = {
   "Test.sol": fs.readFileSync("./Test.sol").toString()
 };
-axios.post("http://solc.io", postData)
+axios.post("http://localhost:8000", postData)
 .then((res) => {
   try {
     console.log(res.data);
@@ -49,4 +49,4 @@ axios.post("http://solc.io", postData)
 })
 ```
 
-(this repo is similar to (solc-api)[https://github.com/smartcontractkit/solc-api] from Steve Ellis)
+(this repo is similar to https://github.com/smartcontractkit/solc-api from Steve Ellis)
