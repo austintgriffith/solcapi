@@ -9,7 +9,7 @@ let axiosConfig = {
       "Access-Control-Allow-Origin": "*",
   }
 };
-axios.post("http://localhost:8080/api/compile", postData, axiosConfig)
+axios.post("http://localhost:8000", postData, axiosConfig)
 .then((res) => {
   try {
     console.log(res.data);
