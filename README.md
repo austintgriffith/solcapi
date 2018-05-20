@@ -2,6 +2,17 @@
 
 Solidity Compiler API #BUIDLt for Solidity Golf
 
+
+POST an object to be passed to the solc compiler to http://18.217.190.20:8080:
+```
+{
+  "Test.sol": "YOUR SOLIDITY CODE HERE"
+}
+```
+
+
+# running your own
+
 ## docker
 ```
 cd docker
@@ -18,14 +29,6 @@ npm start
 ```
 (listens for POST requests on port 8080)
 
-
-POST an object to be passed to the solc compiler:
-```
-{
-  "Test.sol": "YOUR SOLIDITY CODE HERE"
-}
-```
-
 ## usage
 
 ### axios
@@ -35,7 +38,7 @@ const axios = require('axios');
 var postData = {
   "Test.sol": fs.readFileSync("./Test.sol").toString()
 };
-axios.post("http://localhost:8000", postData)
+axios.post("http://18.217.190.20:8080/", postData)
 .then((res) => {
   try {
     console.log(res.data);
