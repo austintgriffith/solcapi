@@ -10,6 +10,14 @@ POST solidity code to https://api.solc.io
 }
 ```
 
+Optional headers:
+```
+"verbose": 1
+(returns more information from the compiler)
+
+"optimize": 0
+(passed as the optimize integer)
+```
 ------
 
 
