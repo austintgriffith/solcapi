@@ -22,6 +22,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.post('/', function(req, res, next) {
   console.log("COMPILING",req.body)
   var compiled = solc.compile({sources: req.body}, 1)
+  for(let contract in compiled.contracts){
+    console.log("Cleaning contract output for ",contract)
+    delete compiled.contracts[contract].assembly
+    delete compiled.contracts[contract].opcodes
+  }
   res.json(compiled)
 });
 
