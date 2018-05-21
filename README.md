@@ -1,4 +1,4 @@
-# solcapi
+# [solcapi](https://github.com/austintgriffith/solcapi)
 
 Solidity Compiler API #BUIDLt for Solidity Golf
 
